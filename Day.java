@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Day {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("src/Day1.txt");
+        ArrayList<String> fileData = getFileData("src/Day.txt");
     }
 
         public static ArrayList<String> getFileData (String fileName){
