@@ -21,7 +21,11 @@ public class Day2 {
                 boolean b = false;
                 for (int j = 0; j < list.size(); j++){
 // cant just copy over list have to make loop to add values
-                    ArrayList<Integer> tempList = list;
+
+                    ArrayList<Integer> tempList = new ArrayList<Integer>();
+                    for (int k = 0; k < list.size(); k++){
+                        tempList.add(list.get(k));
+                    }
                     tempList.remove(j);
                     if (incTest(tempList) || decTest(tempList)) b = true;
                 }
