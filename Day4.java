@@ -33,10 +33,16 @@ public class Day4 {
 //                if (j >= 3) b = true;
 //                if (i >= 3) u = true;
 //                if (i < grid.length - 3) d = true;
-                if (grid[i][j].equals("A")){
-                    if (grid[i-1][j-1].equals("M") && grid[i+1][j-1].equals("M")){
-                        if (grid[i+1][j+1].equals("M") && grid[i-1][j+1].equals("M"))
-                    }
+                if (grid[i][j].equals("A")) {
+                    String spot1 = grid[i - 1][j - 1];
+                    String spot2 = grid[i - 1][j + 1];
+                    String spot3 = grid[i + 1][j - 1];
+                    String spot4 = grid[i + 1][j + 1];
+
+                    if (spot1.equals("M") && spot2.equals("M") && spot3.equals("S") && spot4.equals("S")) count++;
+                    if (spot1.equals("M") && spot2.equals("S") && spot3.equals("M") && spot4.equals("S"))count++;
+                    if (spot1.equals("S") && spot2.equals("M") && spot3.equals("S") && spot4.equals("M"))count++;
+                    if (spot1.equals("S") && spot2.equals("S") && spot3.equals("M") && spot4.equals("M"))count++;
                 }
 
 
