@@ -40,7 +40,9 @@ public class Day5 {
         for(int i = 0; i < prints.size();i++){
             ArrayList<ArrayList<Integer>> validRules = ruleCheck(rules, prints.get(i));
             //System.out.println(validRules);
-            count+=midNum(validRules,prints.get(i));
+            if(midNum(validRules,prints.get(i))==0){
+                count+=fixNum(validRules,prints.get(i));
+            }
 
         }
         System.out.println(count);
@@ -48,22 +50,70 @@ public class Day5 {
     }
     public static int midNum(ArrayList<ArrayList<Integer>> validRules, ArrayList<Integer> prints){
         int mid = prints.get(prints.size()/2);
+        //int mid = 0;
         //System.out.println(mid);
+        //System.out.println(validRules);
         for(int i = 0; i < prints.size();i++){
+            //for each value being printed
             int num = prints.get(i);
-            for (int j = 0; j < validRules.size(); j++){
-                if(validRules.get(j).get(0) == num){
-                    int secondNum = validRules.get(j).get(1);
-                    for (int k = 0; k < prints.size(); k++){
-                        if (prints.get(k) == num){
 
-                        }
-                    }
+            for (int j = 0; j < validRules.size(); j++){
+                // for each rule in the valid rules
+                //System.out.println("valid: "+validRules.get(j).get(0));
+                //System.out.println("num: "+num);
+                if(validRules.get(j).get(0) == num){
+                  //  System.out.printf("=---");
+                    //System.out.println();
+                    int secondNum = validRules.get(j).get(1);
+                 //   System.out.println("1: " + num);
+                 //   System.out.println("2: " + secondNum);
+                    int index1 = prints.indexOf(num);
+                    int index2 = prints.indexOf(secondNum);
+                    if(index2 < index1) mid = 0;
                 }
             }
         }
         return mid;
     }
+
+    public static int fixNum(ArrayList<ArrayList<Integer>> validRules, ArrayList<Integer> prints){
+        // start by fixing array
+        //then i need to rearrange
+        int temp = midNum(validRules,prints);
+        while(temp == 0) {
+            Collections.shuffle(prints);
+            temp = midNum(validRules,prints);
+
+        }
+        return temp;
+    }
+
+
+
+
+//    public static int fixMidNum(ArrayList<ArrayList<Integer>> validRules, ArrayList<Integer> prints){
+//        int mid = prints.get(prints.size()/2)
+//        for(int i = 0; i < prints.size();i++){
+//            //for each value being printed
+//            int num = prints.get(i);
+//
+//            for (int j = 0; j < validRules.size(); j++){
+//                // for each rule in the valid rules
+//                //System.out.println("valid: "+validRules.get(j).get(0));
+//                //System.out.println("num: "+num);
+//                if(validRules.get(j).get(0) == num){
+//                    //  System.out.printf("=---");
+//                    //System.out.println();
+//                    int secondNum = validRules.get(j).get(1);
+//                    //   System.out.println("1: " + num);
+//                    //   System.out.println("2: " + secondNum);
+//                    int index1 = prints.indexOf(num);
+//                    int index2 = prints.indexOf(secondNum);
+//                    if(index2 < index1) mid = 0;
+//                }
+//            }
+//        }
+//    }
     public static ArrayList ruleCheck(int[][] rules, ArrayList<Integer> prints){
         ArrayList<ArrayList<Integer>> validRules = new ArrayList<>();
         for(int i = 0; i < rules.length; i++){
@@ -105,3 +155,14 @@ public class Day5 {
         }
     }
 }
+//int middleIndex = list.length/2
+//
+//for each rule,
+//count how many times a number shows up on the right
+//which ever number shows up on the right the same number of times as "middleIndex" is the middle numbe72
+//
+//61,13,29
+//
+//        61|29
+//        61|13
+//        29|13
