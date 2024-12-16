@@ -12,7 +12,7 @@ public class Day6 {
         ArrayList<ArrayList<Integer>> positions = new ArrayList<>();
         for (int i = 0; i < fileData.size(); i++){
             int num = fileData.get(i).indexOf("^");
-            System.out.println(num);
+           // System.out.println(num);
             if (num > 0) {
                 ArrayList<Integer> ints = new ArrayList<>();
                 ints.add(i);
@@ -20,6 +20,7 @@ public class Day6 {
                 positions.add(ints);
             }
         }
+       // System.out.println(positions);
         boolean b = true;
         int i = positions.get(0).get(0);
         int j = positions.get(0).get(1);
@@ -31,18 +32,24 @@ public class Day6 {
             //think i creatred infinite loop
             ArrayList<Integer> coords = new ArrayList<>();
             if (up) {
+                //System.out.println("upping @ " + positions.get(0));
                 if (i == 0) b = false;
                 else if (i > 0) {
                     if (fileData.get(i - 1).substring(j, j + 1).equals("#")) {
                         up = false;
                         right = true;
+
                     }
                     else {
-                        coords.add(i-1); coords.add(j);
+                        //System.out.println("esle");
+                        coords.add(i-1);
+                        coords.add(j);
+                        i--;
                     }
                 }
             }
-            if (right){
+            else if (right){
+                System.out.println("right");
                 if(j == 129)b = false;
                 else if (j < 129){
                     if(fileData.get(i).substring(j+1, j+2).equals("#")){
@@ -50,11 +57,13 @@ public class Day6 {
                         down = true;
                     }
                     else{
-                        coords.add(i); coords.add(j+1);
+                        coords.add(i);
+                        coords.add(j+1);
+                        j++;
                     }
                 }
             }
-            if (down){
+            else if (down){
                 if(i == fileData.size()-1)b = false;
                 else if (i < fileData.size()-1){
                     if(fileData.get(i+1).substring(j, j+1).equals("#")){
@@ -62,12 +71,15 @@ public class Day6 {
                         left = true;
                     }
                     else{
-                        coords.add(i+1); coords.add(j);
+                        coords.add(i+1);
+                        coords.add(j);
+                        i++;
                     }
                 }
             }
-            if (left){
+            else if (left){
                 if(j == 0)b = false;
+
                 else if (j >0){
                     if(fileData.get(i).substring(j-1, j).equals("#")){
                         left = false;
@@ -75,21 +87,30 @@ public class Day6 {
                     }
                     else{
                         coords.add(i); coords.add(j-1);
+                        j--;
                     }
                 }
             }
 
-
-            if (!check(coords, positions))positions.add(coords);
+            //System.out.println(positions);
+            if (b && !check(coords, positions))positions.add(coords);
         }
         System.out.println(positions.size());
 
     }
 
     public static boolean check(ArrayList<Integer> coords, ArrayList<ArrayList<Integer>> positions){
+        System.out.println(coords);
+        System.out.println(positions);
         for(int i = 0; i < positions.size();i++) {
-            if (coords.get(0) == positions.get(i).get(0) && coords.get(1) == positions.get(i).get(1)){
-                return true;
+            if (coords.size() == 2) {
+                System.out.println("bouta add");
+                System.out.println("coord0 " + coords.get(0) + "coords1 " + coords.get(1));
+                System.out.println("pos0: " + positions.get(i).get(0));
+                System.out.println("pos1" + positions.get(i).get(1));
+                    if (coords.get(0) == positions.get(i).get(0) && coords.get(1) == positions.get(i).get(1)){
+                        return true;
+                    }
             }
 
         }
