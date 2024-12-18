@@ -18,6 +18,7 @@ public class Day6 {
                 ArrayList<Integer> ints = new ArrayList<>();
                 ints.add(i);
                 ints.add(num);
+                ints.add(0);
                 positions.add(ints);
                 dupPos.add(ints);
             }
@@ -89,97 +90,47 @@ public class Day6 {
             }
 
             //System.out.println(positions);
-            if (b && !check(coords, positions)) positions.add(coords);
+            if (b && !check(coords, positions)){
+                if(up) coords.add(0);
+                else if (right) coords.add(1);
+                else if (down) coords.add(2);
+                else if (left) coords.add(3);
+                positions.add(coords);
+            }
             if (coords.size() == 2) dupPos.add(coords);
-        }int dups = 0;
-        //System.out.println(positions.size());
-        //System.out.println(dupPos);
-        for (int k = 1; k < positions.size(); k++) {
-            ArrayList<Integer> tempAr = positions.get(k);
-            String s = fileData.get(positions.get(k).get(0));
-            String ss = s.substring(0, positions.get(k).get(1)) + "0" + s.substring(positions.get(k).get(1) + 1);
-            fileData.set(positions.get(k).get(0), ss);
-            //System.out.println(s);
-            b = true;
-             i = positions.get(0).get(0);
-             j = positions.get(0).get(1);
-             up = true;
-             down = false;
-             right = false;
-             left = false;
-             int count = 0;
+        }
+        System.out.println(positions.size());
+        System.out.println(positions);
 
-             while (b) {
-                 count++;
-                //think i creatred infinite loop
-                ArrayList coord = new ArrayList<>();
-                if (up) {
-                    //System.out.println("upping @ " + positions.get(0));
-                    if (i == 0) b = false;
-                    else if (i > 0) {
-                        if (fileData.get(i - 1).substring(j, j + 1).equals("#")) {
-                            up = false;
-                            right = true;
-
-                        } else {
-                            //System.out.println("esle");
-                            coord.add(i - 1);
-                            coord.add(j);
-                            i--;
-                        }
-                    }
-                } else if (right) {
-                    //System.out.println("right");
-                    if (j == 129) b = false;
-                    else if (j < 129) {
-                        if (fileData.get(i).substring(j + 1, j + 2).equals("#")) {
-                            right = false;
-                            down = true;
-                        } else {
-                            coord.add(i);
-                            coord.add(j + 1);
-                            j++;
-                        }
-                    }
-                } else if (down) {
-                    if (i == fileData.size() - 1) b = false;
-                    else if (i < fileData.size() - 1) {
-                        if (fileData.get(i + 1).substring(j, j + 1).equals("#")) {
-                            down = false;
-                            left = true;
-                        } else {
-                            coord.add(i + 1);
-                            coord.add(j);
-                            i++;
-                        }
-                    }
-                } else if (left) {
-                    if (j == 0) b = false;
-
-                    else if (j > 0) {
-                        if (fileData.get(i).substring(j - 1, j).equals("#")) {
-                            left = false;
-                            up = true;
-                        } else {
-                            coord.add(i);
-                            coord.add(j - 1);
-                            j--;
-                        }
-                    }
-                }
-                if (count > 999999){
-                    b = false;
-                    dups++;
-
+        for(int j = 0; j < fileData.size(); j ++){
+            for (int k = 0; k < fileData.get(j).length(); k++){
+                if (j != positions.get(0).get(0) || k != positions.get(0).get(1)){
+                    
                 }
             }
-            fileData.set(positions.get(k).get(0), s);
         }
-        System.out.println(dups);
+        
+        
+        
+        
+        
+        
+//        for (int p = 0; p < positions.size()-1;p++ ){
+//            int row = positions.get(p).get(0);
+//            int col = positions.get(p).get(1);
+//            int dir = positions.get(p).get(2);
+////            System.out.println(row);
+////            System.out.println(col );
+////            System.out.println(dir);
+//            if (dir == 0){
+//                 
+//            }
+//        }
+
     }
 
     public static boolean check(ArrayList<Integer> coords, ArrayList<ArrayList<Integer>> positions){
-         //System.out.println(coords);
+        //System.out.println(coords);
         //System.out.println(positions);
         if (coords.size() != 2) return true;
 
