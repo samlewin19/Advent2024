@@ -101,32 +101,102 @@ public class Day6 {
         }
         System.out.println(positions.size());
         System.out.println(positions);
-
-        for(int j = 0; j < fileData.size(); j ++){
-            for (int k = 0; k < fileData.get(j).length(); k++){
-                if (j != positions.get(0).get(0) || k != positions.get(0).get(1)){
-                    
+        ArrayList<ArrayList<Integer>> loopPos = new ArrayList<>();
+        for(int p = 0; p < fileData.size(); p++){
+            for (int k = 0; k < fileData.get(p).length(); k++){
+                if (p != positions.get(0).get(0) || k != positions.get(0).get(1)){
+                    String temp = fileData.get(p);
+                    fileData.set(p, temp.substring(0,k) + "#" + temp.substring(k+1));
+                    if (loopCheck(positions, fileData)){
+                        ArrayList<Integer> lops = new ArrayList<>();
+                        lops.add(p);
+                        lops.add(k);
+                        loopPos.add(lops);
+                    }
                 }
             }
-        }
-        
-        
-        
-        
-        
-        
-//        for (int p = 0; p < positions.size()-1;p++ ){
-//            int row = positions.get(p).get(0);
-//            int col = positions.get(p).get(1);
-//            int dir = positions.get(p).get(2);
-////            System.out.println(row);
-////            System.out.println(col );
-////            System.out.println(dir);
-//            if (dir == 0){
-//                 
-//            }
-//        }
 
+        }
+        System.out.println("answer: " + loopPos.size());
+
+    }
+    public static boolean loopCheck(ArrayList<ArrayList<Integer>> positions, ArrayList<String> fileData){
+        boolean b = true;
+        int i = positions.get(0).get(0);
+        int j = positions.get(0).get(1);
+        int dir = positions.get(0).get(2);
+        ArrayList<Integer> tempPos = new ArrayList<>();
+        while (b) {
+            //think i creatred infinite loop
+            ArrayList<Integer> coords = new ArrayList<>();
+            if (dir==0) {
+                //System.out.println("upping @ " + positions.get(0));
+                if (i == 0) b = false;
+                else if (i > 0) {
+                    if (fileData.get(i - 1).substring(j, j + 1).equals("#")) {
+                        dir = 1;
+
+                    } else {
+                        //System.out.println("esle");
+                        coords.add(i - 1);
+                        coords.add(j);
+                        coords.add(dir);
+                        i--;
+                    }
+                }
+            }
+            else if (dir == 1) {
+                //System.out.println("right");
+                if (j == 129) b = false;
+                else if (j < 129) {
+                    if (fileData.get(i).substring(j + 1, j + 2).equals("#")) {
+                        dir = 2;
+                    } else {
+                        coords.add(i);
+                        coords.add(j + 1);
+                        coords.add(dir);
+                        j++;
+                    }
+                }
+            }
+            else if (dir == 2) {
+                if (i == fileData.size() - 1) b = false;
+                else if (i < fileData.size() - 1) {
+                    if (fileData.get(i + 1).substring(j, j + 1).equals("#")) {
+                        dir = 3;
+                    } else {
+                        coords.add(i + 1);
+                        coords.add(j);
+                        coords.add(dir);
+                        i++;
+                    }
+                }
+            }
+            else if (dir == 3) {
+                if (j == 0) b = false;
+
+                else if (j > 0) {
+                    if (fileData.get(i).substring(j - 1, j).equals("#")) {
+                        dir = 0;
+                    } else {
+                        coords.add(i);
+                        coords.add(j - 1);
+                        coords.add(dir);
+                        j--;
+                    }
+                }
+            }
+            System.out.println(coords);
+            //System.out.println(positions);
+
+           for (int t = 0; t < positions.size(); t++) {
+               if (coords.size() == 3) {
+                   if (i == coords.get(0) && j == coords.get(1) && dir == coords.get(2)) return true;
+               }
+           }
+
+        }
+        return true;
     }
 
     public static boolean check(ArrayList<Integer> coords, ArrayList<ArrayList<Integer>> positions){
